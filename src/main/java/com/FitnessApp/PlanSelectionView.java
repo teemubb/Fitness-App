@@ -134,7 +134,7 @@ public class PlanSelectionView extends JPanel {
 
     private void updateNutritionalValues() {
         if(selectedPlan == null){
-            System.out.println("this is a bug.");
+            System.out.println("No plan selected.");
             return;
         }
         double totalCalories = selectedPlan.getCalories();

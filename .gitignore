@@ -1,2 +1,11 @@
 ### VS Code ###
 .vscode/
+
+# Ignore IntelliJ project files
+.idea/
+*.iml
+
+# Ignore compiled output
+out/
+build/
+target/
