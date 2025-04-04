@@ -17,6 +17,35 @@ public class UserInterface extends JFrame {
     private User user;
 
     public UserInterface(int width, int height) {
+
+        try {
+            // Nimbus look & feel
+            UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+            // Background
+            UIManager.put("control", Color.DARK_GRAY);  // Background for components
+            UIManager.put("nimbusBase", new Color(0, 98, 255));   // General theme colour
+            // Buttons
+            UIManager.put("Button.textForeground", Color.BLACK);  // Button text colour
+            UIManager.put("Button.font", new Font("SansSherif", Font.BOLD, 14));
+
+            UIManager.put("text", Color.WHITE);        // Text colour
+
+            // Dropdown menu
+            UIManager.put("ComboBox:\"ComboBox.listRenderer\"[Selected].background", new Color(0, 98, 255)); // selected background
+            UIManager.put("ComboBox:\"ComboBox.listRenderer\".background", new Color(160, 172, 252)); //unselected background
+            UIManager.put("ComboBox:\"ComboBox.textField\"[Selected].textForeground", new Color(255, 0, 255));
+
+            // Text field colours
+            UIManager.put("TextArea.background", new Color(211, 211, 211));
+            UIManager.put("TextArea.foreground", Color.BLACK);  // Black text for contrast
+            UIManager.put("TextField.background", new Color(211, 211, 211));  // Lighter grey background for all JTextFields
+            UIManager.put("TextField.foreground", Color.BLACK);  // Black text for contrast
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
         user = new User();
         frame = new JFrame("Tracker App");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
