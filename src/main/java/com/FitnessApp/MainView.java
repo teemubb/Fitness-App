@@ -29,6 +29,16 @@ public class MainView extends JPanel implements MealListener, ExerciseListener{
         this.add(menuButton, gbc);
         menuButton.addActionListener(e -> ui.switchView(ui.getQuickMenuView()));
 
+        // Add meal button
+        JButton addButton = new JButton("Add meal");
+        gbc.gridx = 1;
+        gbc.gridy = 4;
+        //gbc.gridwidth = 1;
+        gbc.anchor = GridBagConstraints.SOUTHEAST; // Align to bottom right
+        gbc.fill = GridBagConstraints.NONE; // Don't stretch the button
+        this.add(addButton, gbc);
+        addButton.addActionListener(e -> ui.switchView(ui.getAddView()));
+
         // Spacer
         gbc.weightx = 1.0;
         gbc.gridx = 1;
@@ -51,15 +61,8 @@ public class MainView extends JPanel implements MealListener, ExerciseListener{
         gbc.gridy = 2;
         gbc.gridwidth = 2;
         gbc.anchor = GridBagConstraints.CENTER;
+        gbc.fill = GridBagConstraints.HORIZONTAL; // Don't stretch the button
         this.add(progressBar, gbc);
-
-        // Add meal button
-        JButton addButton = new JButton("Add meal");
-        addButton.addActionListener(e -> ui.switchView(ui.getAddView()));
-        gbc.gridx = 1;
-        gbc.gridy = 4;
-        gbc.anchor = GridBagConstraints.SOUTHEAST; // Align to bottom right
-        this.add(addButton, gbc);
 
         // Text area setup
         foodTextArea = new JTextArea();

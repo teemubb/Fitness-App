@@ -6,7 +6,7 @@ public class Main{
         try {
             UserInterface ui = new UserInterface(Integer.parseInt(args[0]), Integer.parseInt(args[1]));
         } catch (NumberFormatException nbe) {
-            UserInterface ui = new UserInterface(480, 640); //lol nyt piilotellaan virheita
+            UserInterface ui = new UserInterface(480, 640);
         } catch (Exception e) {
             UserInterface ui = new UserInterface(480, 640);
         }
