@@ -47,7 +47,7 @@ public class UserInterface extends JFrame {
 
 
         user = new User();
-        frame = new JFrame("Tracker App");
+        frame = new JFrame("FitApp");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(width, height);
         frame.setLocationRelativeTo(null); // Center the window
