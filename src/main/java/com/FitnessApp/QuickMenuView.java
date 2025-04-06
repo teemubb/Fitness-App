@@ -28,9 +28,6 @@ class QuickMenuView extends JPanel {
         // Button to open summary view
         addButton("Summary", gbc, 3, e -> ui.switchView(ui.getSummaryView()));
 
-        // Button to simulate opening a non-implemented workouts view
-        addButton("Workouts", gbc, 4, e -> ui.switchView(ui.getAddWorkoutView()));
-
         // Button to open add meal view
         addButton("Add Meal", gbc, 5, e -> ui.switchView(ui.getAddView()));
 
