@@ -79,7 +79,7 @@ public class AddMealView extends JPanel {
                 JOptionPane.showMessageDialog(this, "Please enter non-negative values.");
             } else {
                 Meal meal = new Meal(name, calories, fat, protein, carbs);
-                ui.getUser().addMeal(meal);
+                //ui.getUser().addMeal(meal); // useless
                 fireMealAdded(meal);
                 JOptionPane.showMessageDialog(this, "Meal added successfully!");
                 ui.switchView(ui.getMainView()); // Return to main view after adding

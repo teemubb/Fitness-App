@@ -76,7 +76,7 @@ public class AddWorkoutView extends JPanel {
             }
             else{
             Exercise workout = new Exercise(exerciseType, "nice", exerciseType, duration);
-            ui.getUser().addWorkout(workout);
+            //ui.getUser().addWorkout(workout); // useless
             fireExerciseAdded(workout);
             JOptionPane.showMessageDialog(this, "Workout added successfully!");
             ui.switchView(ui.getMainView());
