@@ -30,6 +30,8 @@ public class WorkoutView extends JPanel implements ExerciseListener {
         workoutList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         JScrollPane scrollPane = new JScrollPane(workoutList);
         scrollPane.setPreferredSize(new Dimension(300, 400));
+        workoutList.setBackground(new Color(230, 230, 230)); // Todo: colouring through uimanager in userinterface
+        workoutList.setForeground(Color.BLACK);
 
         // Panel for buttons
         JPanel buttonPanel = new JPanel();
@@ -48,6 +50,7 @@ public class WorkoutView extends JPanel implements ExerciseListener {
     }
     //TODO: TIME FORMAT
     private void loadWorkouts() {
+        workoutModel.clear(); // Clear the list before loading
         System.out.println("Exercise count: " + user.getExerciseList().size());
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
         List<Exercise> exercises = user.getExerciseList();
@@ -57,6 +60,7 @@ public class WorkoutView extends JPanel implements ExerciseListener {
             workoutModel.addElement(displayText);
         }
     }
+
 
     private void backAction(ActionEvent e) {
         ui.switchView(ui.getMainView());

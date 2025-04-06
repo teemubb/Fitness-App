@@ -41,6 +41,10 @@ public class UserInterface extends JFrame {
             UIManager.put("TextField.background", new Color(211, 211, 211));  // Lighter grey background for all JTextFields
             UIManager.put("TextField.foreground", Color.BLACK);  // Black text for contrast
 
+           /* UIManager.put("List.background" , new Color(211, 211, 211));
+            UIManager.put("List.foreground" , Color.BLACK);*/
+            //UIManager.put("List[Selected].textForeground" , Color.BLACK);
+
         } catch (Exception e) {
             e.printStackTrace();
         }
