@@ -21,9 +21,15 @@ public class WorkoutView extends JPanel implements ExerciseListener {
     private void setupUI() {
         this.setLayout(new BorderLayout());
 
+
+        JLabel titleLabel = new JLabel("Workouts", JLabel.CENTER);
+        titleLabel.setFont(new Font("SansSherif", Font.BOLD, 20)); // Optional: customize font size and style
+        this.add(titleLabel, BorderLayout.NORTH);
+
         // Initialize the model for workout details
         workoutModel = new DefaultListModel<>();
         loadWorkouts();
+
 
         // Setup the JList with the model
         workoutList = new JList<>(workoutModel);
@@ -55,7 +61,7 @@ public class WorkoutView extends JPanel implements ExerciseListener {
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
         List<Exercise> exercises = user.getExerciseList();
         for (Exercise ex : exercises) {
-            String displayText = String.format("Time: %s, Type: %s, Duration: %s min, Calories: %f kcal",
+            String displayText = String.format("Time: %s, Type: %s, Duration: %s min, Calories: %.0f kcal",
                     ex.getFormattedTimestamp(), ex.getExerciseType(), ex.getDuration(), ex.getCaloriesBurned());
             workoutModel.addElement(displayText);
         }
