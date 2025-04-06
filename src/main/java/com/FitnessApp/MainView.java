@@ -46,6 +46,7 @@ public class MainView extends JPanel implements MealListener, ExerciseListener{
 
         // Daily Calories label
         JLabel caloriesLabel = new JLabel("Daily Calories");
+        caloriesLabel.setFont(new Font("SansSherif", Font.BOLD, 20));
         gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.gridwidth = 2; // Span across two columns
@@ -57,6 +58,7 @@ public class MainView extends JPanel implements MealListener, ExerciseListener{
         progressBar.setValue(0);
         progressBar.setStringPainted(true);
         progressBar.setString("Start Tracking!");
+        progressBar.setPreferredSize(new Dimension(400, 30));
         gbc.gridx = 0;
         gbc.gridy = 2;
         gbc.gridwidth = 2;
@@ -64,7 +66,7 @@ public class MainView extends JPanel implements MealListener, ExerciseListener{
         gbc.fill = GridBagConstraints.HORIZONTAL; // Don't stretch the button
         this.add(progressBar, gbc);
 
-        // Text area setup
+        // Text area setup TODO: change to list / something, add functionality to edit existing meals
         foodTextArea = new JTextArea();
         foodTextArea.setPreferredSize(new Dimension(200, 50));
         JScrollPane scrollPane = new JScrollPane(foodTextArea);
@@ -87,7 +89,7 @@ public class MainView extends JPanel implements MealListener, ExerciseListener{
         double totalCalories = GetTotalCalories();
         System.out.println(totalCalories);
         progressBar.setValue((int) totalCalories);
-        progressBar.setString(totalCalories + " / 3000 Kcal");
+        progressBar.setString(totalCalories + " / 3000 Kcal"); // TODO: fetch from plan selection (needs to be implemented)
     }
 
 
@@ -106,7 +108,7 @@ public class MainView extends JPanel implements MealListener, ExerciseListener{
         double totalCalories = 0;
         for (Meal meal : user.getMealList()) {
             System.out.println(meal.getCalories());
-            totalCalories += meal.getCalories() / 2;
+            totalCalories += meal.getCalories();
         }
         return totalCalories;
     }
