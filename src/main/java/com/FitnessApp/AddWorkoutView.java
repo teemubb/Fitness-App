@@ -69,38 +69,24 @@ public class AddWorkoutView extends JPanel {
     private void addWorkout() {
         try {
             String exerciseType = (String) exerciseTypeDropdown.getSelectedItem();
-            int duration = Integer.parseInt(durationField.getText());
+            double duration = Double.parseDouble(durationField.getText());
 
             if (duration <= 0) {
-                showCustomDialog("Please enter a positive value for duration.");
-                return;
+                JOptionPane.showMessageDialog(this, "Please enter a positive value for duration.");
             }
-            Exercise workout = new Exercise(exerciseType, "a", "a", 10);
+            else{
+            Exercise workout = new Exercise(exerciseType, "nice", exerciseType, duration);
             ui.getUser().addWorkout(workout);
             fireExerciseAdded(workout);
             JOptionPane.showMessageDialog(this, "Workout added successfully!");
             ui.switchView(ui.getMainView());
+
+            }
         } catch (NumberFormatException err) {
-            showCustomDialog("You cannot add a workout with negative values!");
+            JOptionPane.showMessageDialog(this,"You cannot add a workout with negative values!");
         } catch (Exception err) {
-            showCustomDialog("An error occurred. Please try again.");
+            JOptionPane.showMessageDialog(this,"An error occurred. Please try again.");
         }
-    }
-
-    private void showCustomDialog(String message) {
-        JDialog dialog = new JDialog((Frame) SwingUtilities.getWindowAncestor(this), "Warning", true);
-        dialog.setLayout(new GridLayout(0, 1));
-        dialog.add(new JLabel(message, SwingConstants.CENTER));
-
-        JPanel buttonsPanel = new JPanel();
-        JButton backButton = new JButton("Back");
-        backButton.addActionListener(e -> dialog.dispose());
-        buttonsPanel.add(backButton);
-
-        dialog.add(buttonsPanel);
-        dialog.pack();
-        dialog.setLocationRelativeTo(this);
-        dialog.setVisible(true);
     }
 
     public void addExerciseListener(ExerciseListener listener) {
@@ -114,7 +100,11 @@ public class AddWorkoutView extends JPanel {
     private void fireExerciseAdded(Exercise exercise) {
         ExerciseEvent event = new ExerciseEvent(this, exercise);
         for (ExerciseListener listener : exerciseListeners) {
-            listener.exerciseAdded(event.getExercise());
+            try {
+                listener.exerciseAdded(event.getExercise());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 }

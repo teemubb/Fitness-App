@@ -57,12 +57,16 @@ public class UserInterface extends JFrame {
         mainView = new MainView(this, user, planView);
         quickMenuView = new QuickMenuView(this);
         settingsView = new SettingsView(this, user);
+
         addView = new AddMealView(this);
         addView.addMealListener(user);
         addView.addMealListener(mainView);
+
+        workoutView = new WorkoutView(this, user);
         addWorkoutView = new AddWorkoutView(this);
         addWorkoutView.addExerciseListener(user);
-        workoutView = new WorkoutView(this, user);
+        addWorkoutView.addExerciseListener(workoutView); // tarvii listener?
+
         summaryView = new SummaryView(this, planView);
 
         frame.add(loginView, BorderLayout.CENTER);

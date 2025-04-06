@@ -6,7 +6,7 @@ import java.awt.event.ActionEvent;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-public class WorkoutView extends JPanel {
+public class WorkoutView extends JPanel implements ExerciseListener {
     private UserInterface ui;
     private User user;
     private JList<String> workoutList;
@@ -42,12 +42,18 @@ public class WorkoutView extends JPanel {
         this.add(buttonPanel, BorderLayout.SOUTH);
     }
 
+    @Override
+    public void exerciseAdded(Exercise exercise) {
+        loadWorkouts();
+    }
+    //TODO: TIME FORMAT
     private void loadWorkouts() {
+        System.out.println("Exercise count: " + user.getExerciseList().size());
         SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm");
         List<Exercise> exercises = user.getExerciseList();
         for (Exercise ex : exercises) {
-            String displayText = String.format("Date: %s, Type: %s, Duration: %s min, Calories: %f kcal",
-                    sdf.format(ex.getFormattedTimestamp()), ex.getExerciseType(), ex.getDuration(), ex.getCaloriesBurned());
+            String displayText = String.format("Time: %s, Type: %s, Duration: %s min, Calories: %f kcal",
+                    ex.getFormattedTimestamp(), ex.getExerciseType(), ex.getDuration(), ex.getCaloriesBurned());
             workoutModel.addElement(displayText);
         }
     }
