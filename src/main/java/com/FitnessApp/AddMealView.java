@@ -1,5 +1,6 @@
 package com.FitnessApp;
 
+import com.Database.Postgre;
 import javax.swing.*;
 import java.awt.*;
 import java.util.List;
@@ -10,9 +11,11 @@ public class AddMealView extends JPanel {
     private JTextField nameField, calField, fatField, proteinField, carbsField;
     private JButton addButton;
     private List<MealListener> mealListeners = new ArrayList<>();
+    private Postgre db;
 
-    public AddMealView(UserInterface ui) {
+    public AddMealView(UserInterface ui, Postgre db) {
         this.ui = ui;
+        this.db = db;
         setupUI();
     }
 
@@ -80,6 +83,11 @@ public class AddMealView extends JPanel {
             } else {
                 Meal meal = new Meal(name, calories, fat, protein, carbs);
                 //ui.getUser().addMeal(meal); // useless
+                System.out.println("test1");
+                System.out.println(db.getConnection());
+                db.addMeal(db.getConnection(), name, calories, fat, protein, carbs); //TÄSSÄ HAJOAA...
+                System.out.println("test2");
+
                 fireMealAdded(meal);
                 JOptionPane.showMessageDialog(this, "Meal added successfully!");
                 ui.switchView(ui.getMainView()); // Return to main view after adding
