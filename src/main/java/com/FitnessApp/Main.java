@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public class Main{
     public static void main(String[] args) {
-        Postgre db = new Postgre();
+        Postgre db = Postgre.getInstance();
         try {
             db.open("fitnessapp"); // Open the connection and create tables
         } catch (SQLException e) {
@@ -15,11 +15,11 @@ public class Main{
         }
 
         try {
-            UserInterface ui = new UserInterface(Integer.parseInt(args[0]), Integer.parseInt(args[1]), db);
+            UserInterface ui = new UserInterface(Integer.parseInt(args[0]), Integer.parseInt(args[1]));
         } catch (NumberFormatException nbe) {
-            UserInterface ui = new UserInterface(480, 640, db);
+            UserInterface ui = new UserInterface(480, 640);
         } catch (Exception e) {
-            UserInterface ui = new UserInterface(480, 640, db);
+            UserInterface ui = new UserInterface(480, 640);
         }
     }
 }
