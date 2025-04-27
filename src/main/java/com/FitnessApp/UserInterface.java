@@ -1,4 +1,6 @@
 package com.FitnessApp;
+import com.Database.Postgre;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -15,8 +17,9 @@ public class UserInterface extends JFrame {
     private WorkoutView workoutView;
     private DietPlan dietPlan;
     private User user;
+    private Postgre db;
 
-    public UserInterface(int width, int height) {
+    public UserInterface(int width, int height, Postgre db) {
 
         try {
             // Nimbus look & feel
@@ -62,7 +65,9 @@ public class UserInterface extends JFrame {
         quickMenuView = new QuickMenuView(this);
         settingsView = new SettingsView(this, user);
 
-        addView = new AddMealView(this);
+        this.db = db;
+        addView = new AddMealView(this,db);
+        System.out.println(db.getConnection());
         addView.addMealListener(user);
         addView.addMealListener(mainView);
 
