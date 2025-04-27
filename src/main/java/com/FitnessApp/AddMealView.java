@@ -13,9 +13,9 @@ public class AddMealView extends JPanel {
     private List<MealListener> mealListeners = new ArrayList<>();
     private Postgre db;
 
-    public AddMealView(UserInterface ui, Postgre db) {
+    public AddMealView(UserInterface ui) {
         this.ui = ui;
-        this.db = db;
+        this.db = Postgre.getInstance();
         setupUI();
     }
 
@@ -84,8 +84,7 @@ public class AddMealView extends JPanel {
                 Meal meal = new Meal(name, calories, fat, protein, carbs);
                 //ui.getUser().addMeal(meal); // useless
                 System.out.println("test1");
-                System.out.println(db.getConnection());
-                db.addMeal(db.getConnection(), name, calories, fat, protein, carbs); //TÄSSÄ HAJOAA...
+                db.addMeal(name, calories, fat, protein, carbs);
                 System.out.println("test2");
 
                 fireMealAdded(meal);
