@@ -5,6 +5,7 @@ public class Meal extends Item {
     private double fat;
     private double protein;
     private double carbohydrates;
+    private long datemilli;
 
     public Meal() {
         super("default name");
@@ -13,6 +14,7 @@ public class Meal extends Item {
         protein = 0;
         carbohydrates = 0;
     }
+    //constructor for new meal
     public Meal(String n, double c, double f, double p, double ch){
         super(n);
         if(c > 0){
@@ -27,6 +29,25 @@ public class Meal extends Item {
         if(ch > 0){
             carbohydrates = ch;
         }
+        this.datemilli = System.currentTimeMillis();
+    }
+
+    // constructor for meal from database
+    public Meal(String n, double c, double f, double p, double ch, long date){
+        super(n);
+        if(c > 0){
+            calories = c;
+        }
+        if(f > 0){
+            fat = f;
+        }
+        if(p > 0){
+            protein = p;
+        }
+        if(ch > 0){
+            carbohydrates = ch;
+        }
+        this.datemilli = date;
 
     }
 
@@ -73,7 +94,7 @@ public class Meal extends Item {
                 .append("\nFat: ").append(fat)
                 .append("\nProtein: ").append(protein)
                 .append("\nCarbohydrates: ").append(carbohydrates)
-                .append("\nTimestamp:").append(getTimestamp())
+                .append("\nTimestamp:").append(datemilli)
                 .append("\n");
         return sb.toString();
     }
@@ -81,8 +102,14 @@ public class Meal extends Item {
         StringBuilder sb = new StringBuilder();
         sb.append(getFormattedTimestamp())
                 .append(" " + getName())
-                .append(" ").append(calories + " kCal");
+                .append(" ").append(calories + " kcal");
         return sb.toString();
     }
 
+    public String getFormattedTimestamp() {
+        // Use java.util.Date to convert the timestamp to a human-readable format
+        java.util.Date date = new java.util.Date(datemilli);
+        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return sdf.format(datemilli);
+    }
 }
