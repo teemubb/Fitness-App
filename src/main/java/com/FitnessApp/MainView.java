@@ -1,6 +1,11 @@
 package com.FitnessApp;
+
+import com.Database.Postgre;
 import javax.swing.*;
 import java.awt.*;
+import java.sql.SQLException;
+import java.util.List;
+
 public class MainView extends JPanel implements MealListener, ExerciseListener{
     UserInterface ui;
     private JProgressBar progressBar;
@@ -8,12 +13,15 @@ public class MainView extends JPanel implements MealListener, ExerciseListener{
     private User user;
     private PlanSelectionView planSelectionView;
     private DietPlan dietPlan;
+    private Postgre db;
 
     public MainView(UserInterface ui, User user, PlanSelectionView planSelectionView) {
         this.ui = ui;
         this.user = user;
         this.planSelectionView = planSelectionView;
+        this.db = Postgre.getInstance();
         setupUI();
+        loadMeals();
     }
 
     private void setupUI() {
@@ -80,18 +88,29 @@ public class MainView extends JPanel implements MealListener, ExerciseListener{
         this.add(scrollPane, gbc);
     }
 
-    public void updateFoodTextArea(Meal meal) {
+    private void updateFoodTextArea(Meal meal) {
         String existingText = foodTextArea.getText();
-        foodTextArea.setText(existingText + "\n" + meal.mainString());
+        foodTextArea.setText( meal.mainString() + "\n" + existingText);
     }
 
-    public void updateProgressBar() {
+    private void updateProgressBar() {
         double totalCalories = GetTotalCalories();
         System.out.println(totalCalories);
         progressBar.setValue((int) totalCalories);
         progressBar.setString(totalCalories + " / 3000 Kcal"); // TODO: fetch from plan selection (needs to be implemented)
     }
-
+    // Load stored meals from db
+    private void loadMeals(){
+        try{
+            List<Meal> meals = db.getMeals();
+            for (Meal meal : meals) {
+                updateFoodTextArea(meal);
+            }
+            updateProgressBar();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public void exerciseAdded(Exercise exercise) {
@@ -106,9 +125,15 @@ public class MainView extends JPanel implements MealListener, ExerciseListener{
 
     private double GetTotalCalories() {
         double totalCalories = 0;
-        for (Meal meal : user.getMealList()) {
-            System.out.println(meal.getCalories());
-            totalCalories += meal.getCalories();
+        //load calories from database
+        try {
+            List<Meal> mealsFromDb = db.getMeals();
+            for (Meal meal : mealsFromDb) {
+                System.out.println("Loaded Meal Calories: " + meal.getCalories());
+                totalCalories += meal.getCalories();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return totalCalories;
     }
