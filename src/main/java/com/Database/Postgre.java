@@ -1,8 +1,29 @@
 package com.Database;
+import com.FitnessApp.Meal;
+
 import java.sql.*;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Postgre {
-    private Connection connection;
+    private static Postgre instance = null;
+    private Connection connection = null;
+
+    private Postgre(){
+    }
+    //singleton
+    public static Postgre getInstance() {
+        if (instance == null) {
+            synchronized (Postgre.class) {
+                if (instance == null) {
+                    instance = new Postgre();
+                }
+            }
+        }
+        return instance;
+    }
+
     public void open(String dbname) throws SQLException{
         //TODO: USE CONFIG FILE
         String url = "jdbc:postgresql://localhost:5432/" + dbname; // database URL
@@ -13,18 +34,18 @@ public class Postgre {
             connection = DriverManager.getConnection(url, user, password);
             System.out.println("Connected to PostgreSQL!");
 
-            createTable(connection);
+            createTable();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public Connection getConnection() {
+    /*public Connection getConnection() {
         return connection;
-    }
+    }*/
 
 
-    private void createTable(Connection con){
+    private void createTable(){
 
         String createMealTable = "CREATE TABLE IF NOT EXISTS meals ("
                 + "id SERIAL PRIMARY KEY, "
@@ -35,7 +56,7 @@ public class Postgre {
                 + "carbs DOUBLE PRECISION NOT NULL, "
                 + "date TIMESTAMP DEFAULT CURRENT_TIMESTAMP"
                 + ");";
-        try(Statement s = con.createStatement()){
+        try(Statement s = connection.createStatement()){
             s.executeUpdate(createMealTable);
             System.out.println("meals table created");
         } catch (SQLException e) {
@@ -43,10 +64,10 @@ public class Postgre {
         }
     }
 
-    public void addMeal(Connection con, String mealName, double calories, double fat, double protein, double carbs){
+    public void addMeal(String mealName, double calories, double fat, double protein, double carbs){
         String query = "INSERT INTO meals (meal_name, calories, fat, protein, carbs)"
                 + "VALUES (?, ?, ?, ?, ?)";
-        try(PreparedStatement s = con.prepareStatement(query)){
+        try(PreparedStatement s = connection.prepareStatement(query)){
             s.setString(1, mealName);
             s.setDouble(2, calories);
             s.setDouble(3, fat);
@@ -57,6 +78,30 @@ public class Postgre {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public List<Meal> getMeals() throws SQLException {
+        String query = "SELECT * FROM meals ORDER BY date ASC";
+        List<Meal> mealList = new ArrayList<>();
+        try (Statement s = connection.createStatement();
+             ResultSet rs = s.executeQuery(query)) {
+            while (rs.next()) {
+                //convert to readable format
+                Timestamp timestamp = rs.getTimestamp("date");
+                long timestampMillis = (timestamp != null) ? timestamp.getTime() : 0;
+                Meal meal = new Meal(
+                        rs.getString("meal_name"),
+                        rs.getDouble("calories"),
+                        rs.getDouble("fat"),
+                        rs.getDouble("protein"),
+                        rs.getDouble("carbs"),
+                        timestampMillis
+                );
+                System.out.println(timestampMillis);
+                mealList.add(meal);
+            }
+        }
+        return mealList;
     }
 }
 
