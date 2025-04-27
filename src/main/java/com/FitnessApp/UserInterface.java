@@ -17,9 +17,8 @@ public class UserInterface extends JFrame {
     private WorkoutView workoutView;
     private DietPlan dietPlan;
     private User user;
-    private Postgre db;
 
-    public UserInterface(int width, int height, Postgre db) {
+    public UserInterface(int width, int height) {
 
         try {
             // Nimbus look & feel
@@ -65,9 +64,7 @@ public class UserInterface extends JFrame {
         quickMenuView = new QuickMenuView(this);
         settingsView = new SettingsView(this, user);
 
-        this.db = db;
-        addView = new AddMealView(this,db);
-        System.out.println(db.getConnection());
+        addView = new AddMealView(this);
         addView.addMealListener(user);
         addView.addMealListener(mainView);
 
