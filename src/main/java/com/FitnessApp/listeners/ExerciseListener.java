@@ -1,4 +1,6 @@
-package com.FitnessApp;
+package com.FitnessApp.listeners;
+
+import com.FitnessApp.Obj.Exercise;
 
 import java.util.EventListener;
 
