@@ -1,4 +1,4 @@
-package com.FitnessApp;
+package com.FitnessApp.Obj;
 
 public class Meal extends Item {
     private double calories;
@@ -101,7 +101,7 @@ public class Meal extends Item {
     public String mainString(){
         StringBuilder sb = new StringBuilder();
         sb.append(getFormattedTimestamp())
-                .append(" " + getName())
+                .append("\n " + getName())
                 .append(" ").append(calories + " kcal");
         return sb.toString();
     }
@@ -109,7 +109,7 @@ public class Meal extends Item {
     public String getFormattedTimestamp() {
         // Use java.util.Date to convert the timestamp to a human-readable format
         java.util.Date date = new java.util.Date(datemilli);
-        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm");
         return sdf.format(datemilli);
     }
 }

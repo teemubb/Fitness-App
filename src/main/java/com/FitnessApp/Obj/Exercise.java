@@ -1,6 +1,6 @@
-package com.FitnessApp;
+package com.FitnessApp.Obj;
 
-public class Exercise extends Item{
+public class Exercise extends Item {
     private String description;
     private String exerciseType;
     private double caloriesBurned;

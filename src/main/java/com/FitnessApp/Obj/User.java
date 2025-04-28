@@ -1,9 +1,13 @@
-package com.FitnessApp;
+package com.FitnessApp.Obj;
+
+import com.FitnessApp.listeners.ExerciseListener;
+import com.FitnessApp.listeners.MealListener;
+import com.FitnessApp.PlanSelection;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class User implements MealListener, ExerciseListener{
+public class User implements MealListener, ExerciseListener {
     private Units units;
     private Sex userSex;
     private double userHeight;

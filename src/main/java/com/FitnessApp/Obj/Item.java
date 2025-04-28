@@ -1,7 +1,6 @@
-package com.FitnessApp;
+package com.FitnessApp.Obj;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.time.LocalDate;
 import java.time.Instant;
 import java.time.format.DateTimeFormatter;
 

@@ -1,4 +1,4 @@
-package com.FitnessApp;
+package com.FitnessApp.Obj;
 
 public class DietPlan {
     public static final DietPlan DEFAULT = new DietPlan("Default", 2500, 200, 60, 150);
