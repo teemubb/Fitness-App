@@ -1,4 +1,6 @@
-package com.FitnessApp;
+package com.FitnessApp.events;
+import com.FitnessApp.Obj.Meal;
+
 import java.util.EventObject;
 
 public class MealEvent extends EventObject{
