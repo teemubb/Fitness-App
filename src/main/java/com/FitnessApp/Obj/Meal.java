@@ -90,19 +90,19 @@ public class Meal extends Item {
     public String toString(){
         StringBuilder sb = new StringBuilder();
         sb.append(getName())
-                .append("\nCalories: ").append(calories)
-                .append("\nFat: ").append(fat)
-                .append("\nProtein: ").append(protein)
-                .append("\nCarbohydrates: ").append(carbohydrates)
-                .append("\nTimestamp:").append(datemilli)
+                .append("\n\uD83D\uDD25 Calories: ").append(calories)
+                .append("\n\uD83E\uDD51 Fat: ").append(fat)
+                .append("\n\uD83C\uDF57 Protein: ").append(protein)
+                .append("\n\uD83C\uDF3E Carbohydrates: ").append(carbohydrates)
+                .append("\n\uD83D\uDD52 Timestamp: ").append(getFormattedTimestamp())
                 .append("\n");
         return sb.toString();
     }
     public String mainString(){
         StringBuilder sb = new StringBuilder();
-        sb.append(getFormattedTimestamp())
-                .append("\n " + getName())
-                .append(" ").append(calories + " kcal");
+        sb.append("\uD83D\uDD52 " + getFormattedTimestamp())
+                .append("\n \uD83C\uDF7D " + getName())
+                .append(" \uD83D\uDD25").append(calories + " kcal");
         return sb.toString();
     }
 
