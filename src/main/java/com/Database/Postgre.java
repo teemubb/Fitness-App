@@ -1,8 +1,7 @@
 package com.Database;
-import com.FitnessApp.Meal;
+import com.FitnessApp.Obj.Meal;
 
 import java.sql.*;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,11 +38,6 @@ public class Postgre {
             e.printStackTrace();
         }
     }
-
-    /*public Connection getConnection() {
-        return connection;
-    }*/
-
 
     private void createTable(){
 
@@ -103,6 +97,8 @@ public class Postgre {
         }
         return mealList;
     }
+
+    //TODO: save mealplan&other user data, exercises, logic to reset daily
 }
 
 

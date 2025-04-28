@@ -1,5 +1,7 @@
 package com.FitnessApp;
 import com.Database.Postgre;
+import com.FitnessApp.UI.UserInterface;
+
 import java.sql.SQLException;
 
 
