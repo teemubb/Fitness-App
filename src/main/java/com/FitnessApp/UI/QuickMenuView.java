@@ -1,4 +1,4 @@
-package com.FitnessApp;
+package com.FitnessApp.UI;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;

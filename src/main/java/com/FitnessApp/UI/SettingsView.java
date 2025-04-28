@@ -1,4 +1,6 @@
-package com.FitnessApp;
+package com.FitnessApp.UI;
+
+import com.FitnessApp.Obj.User;
 
 import javax.swing.*;
 import java.awt.*;

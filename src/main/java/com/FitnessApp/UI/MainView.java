@@ -1,19 +1,32 @@
-package com.FitnessApp;
+package com.FitnessApp.UI;
 
 import com.Database.Postgre;
+import com.FitnessApp.listeners.ExerciseListener;
+import com.FitnessApp.listeners.MealListener;
+import com.FitnessApp.Obj.DietPlan;
+import com.FitnessApp.Obj.Exercise;
+import com.FitnessApp.Obj.Meal;
+import com.FitnessApp.Obj.User;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseAdapter;
 import java.sql.SQLException;
 import java.util.List;
 
-public class MainView extends JPanel implements MealListener, ExerciseListener{
+
+
+
+public class MainView extends JPanel implements MealListener, ExerciseListener {
     UserInterface ui;
     private JProgressBar progressBar;
-    private JTextArea foodTextArea;
     private User user;
     private PlanSelectionView planSelectionView;
     private DietPlan dietPlan;
     private Postgre db;
+    private DefaultListModel<String> mealListModel = new DefaultListModel<>();
+    private JList<String> mealList;
 
     public MainView(UserInterface ui, User user, PlanSelectionView planSelectionView) {
         this.ui = ui;
@@ -74,10 +87,25 @@ public class MainView extends JPanel implements MealListener, ExerciseListener{
         gbc.fill = GridBagConstraints.HORIZONTAL; // Don't stretch the button
         this.add(progressBar, gbc);
 
-        // Text area setup TODO: change to list / something, add functionality to edit existing meals
-        foodTextArea = new JTextArea();
-        foodTextArea.setPreferredSize(new Dimension(200, 50));
-        JScrollPane scrollPane = new JScrollPane(foodTextArea);
+        // Text area setup TODO: add functionality to edit existing meals
+        mealListModel = new DefaultListModel<>();
+        mealList = new JList<>(mealListModel);
+        mealList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        //mealList.setLayoutOrientation(JList.VERTICAL);
+        mealList.setVisibleRowCount(-1);
+        JScrollPane scrollPane = new JScrollPane(mealList);
+
+        mealList.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {  // Check for double-click
+                    int index = mealList.locationToIndex(e.getPoint());
+                    String selectedMeal = mealList.getModel().getElementAt(index);
+                    openMealPopup(selectedMeal);
+                }
+            }
+        });
+
         gbc.gridx = 0;
         gbc.gridy = 3;
         gbc.gridwidth = 2;
@@ -88,9 +116,12 @@ public class MainView extends JPanel implements MealListener, ExerciseListener{
         this.add(scrollPane, gbc);
     }
 
+    private void openMealPopup(String selectedMeal) {
+        JOptionPane.showMessageDialog(this, "You selected: " + selectedMeal, "Meal Details", JOptionPane.INFORMATION_MESSAGE);
+    }
+
     private void updateFoodTextArea(Meal meal) {
-        String existingText = foodTextArea.getText();
-        foodTextArea.setText( meal.mainString() + "\n" + existingText);
+        mealListModel.add(0, meal.mainString());
     }
 
     private void updateProgressBar() {
@@ -100,17 +131,19 @@ public class MainView extends JPanel implements MealListener, ExerciseListener{
         progressBar.setString(totalCalories + " / 3000 Kcal"); // TODO: fetch from plan selection (needs to be implemented)
     }
     // Load stored meals from db
-    private void loadMeals(){
-        try{
+    private void loadMeals() {
+        try {
             List<Meal> meals = db.getMeals();
             for (Meal meal : meals) {
-                updateFoodTextArea(meal);
+                mealListModel.addElement(meal.mainString()); // Add meals to the list model
             }
             updateProgressBar();
         } catch (SQLException e) {
             e.printStackTrace();
+            System.out.println("database error");
         }
     }
+
 
     @Override
     public void exerciseAdded(Exercise exercise) {

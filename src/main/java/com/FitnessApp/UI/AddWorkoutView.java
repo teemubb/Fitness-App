@@ -1,8 +1,11 @@
-package com.FitnessApp;
+package com.FitnessApp.UI;
+
+import com.FitnessApp.events.ExerciseEvent;
+import com.FitnessApp.listeners.ExerciseListener;
+import com.FitnessApp.Obj.Exercise;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
 import java.util.List;
 import java.util.ArrayList;
 

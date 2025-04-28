@@ -1,5 +1,6 @@
-package com.FitnessApp;
-import com.Database.Postgre;
+package com.FitnessApp.UI;
+import com.FitnessApp.Obj.DietPlan;
+import com.FitnessApp.Obj.User;
 
 import javax.swing.*;
 import java.awt.*;
@@ -37,12 +38,15 @@ public class UserInterface extends JFrame {
             UIManager.put("ComboBox:\"ComboBox.listRenderer\".background", new Color(160, 172, 252)); //unselected background
             UIManager.put("ComboBox:\"ComboBox.textField\"[Selected].textForeground", new Color(255, 0, 255));
 
-            // Text field colours
+            // Text field colours TODO: FIX FOR LIST VIEW
             UIManager.put("TextArea.background", new Color(211, 211, 211));
             UIManager.put("TextArea.foreground", Color.BLACK);  // Black text for contrast
             UIManager.put("TextField.background", new Color(211, 211, 211));  // Lighter grey background for all JTextFields
             UIManager.put("TextField.foreground", Color.BLACK);  // Black text for contrast
 
+            UIManager.put("List.background", new Color(211, 211, 211)); //change list colour, changes plan selection too atm..
+            UIManager.put("List.textForeground" , Color.BLACK);
+            UIManager.put("List[Selected].textBackground" , Color.WHITE); // only white works for some reason...
            /* UIManager.put("List.background" , new Color(211, 211, 211));
             UIManager.put("List.foreground" , Color.BLACK);*/
             //UIManager.put("List[Selected].textForeground" , Color.BLACK);

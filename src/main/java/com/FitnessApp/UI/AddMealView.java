@@ -1,6 +1,10 @@
-package com.FitnessApp;
+package com.FitnessApp.UI;
 
 import com.Database.Postgre;
+import com.FitnessApp.events.MealEvent;
+import com.FitnessApp.listeners.MealListener;
+import com.FitnessApp.Obj.Meal;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.List;

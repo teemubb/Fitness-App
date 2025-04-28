@@ -1,8 +1,9 @@
-package com.FitnessApp;
+package com.FitnessApp.UI;
+
+import com.FitnessApp.Obj.User;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class PlanSelectionView extends JPanel {

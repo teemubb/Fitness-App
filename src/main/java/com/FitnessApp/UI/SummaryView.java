@@ -1,10 +1,13 @@
-package com.FitnessApp;
+package com.FitnessApp.UI;
+
+import com.FitnessApp.listeners.MealListener;
+import com.FitnessApp.Obj.Meal;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
-public class SummaryView extends JPanel implements MealListener{
+public class SummaryView extends JPanel implements MealListener {
     UserInterface ui;
     private JProgressBar totalCaloriesProgressBar, carbsProgressBar, fatProgressBar, proteinProgressBar;
     private PlanSelectionView planSelectionView;
