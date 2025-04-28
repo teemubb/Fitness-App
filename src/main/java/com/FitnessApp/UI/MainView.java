@@ -25,8 +25,8 @@ public class MainView extends JPanel implements MealListener, ExerciseListener {
     private PlanSelectionView planSelectionView;
     private DietPlan dietPlan;
     private Postgre db;
-    private DefaultListModel<String> mealListModel = new DefaultListModel<>();
-    private JList<String> mealList;
+    private DefaultListModel<Meal> mealListModel = new DefaultListModel<>();
+    private JList<Meal> mealList;
 
     public MainView(UserInterface ui, User user, PlanSelectionView planSelectionView) {
         this.ui = ui;
@@ -87,12 +87,29 @@ public class MainView extends JPanel implements MealListener, ExerciseListener {
         gbc.fill = GridBagConstraints.HORIZONTAL; // Don't stretch the button
         this.add(progressBar, gbc);
 
-        // Text area setup TODO: add functionality to edit existing meals
+        // Meal display setup TODO: add functionality to edit existing meals
         mealListModel = new DefaultListModel<>();
         mealList = new JList<>(mealListModel);
         mealList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         //mealList.setLayoutOrientation(JList.VERTICAL);
         mealList.setVisibleRowCount(-1);
+
+        mealList.setCellRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(
+                    JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+                //default renderer
+                super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                // in case of meal,
+                if (value instanceof Meal) { //check if element in mealList is meal object
+                    Meal meal = (Meal) value; //cast value
+                    setText(meal.mainString()); //use mainString for correct string builder
+                }
+
+                return this;
+            }
+        });
+
         JScrollPane scrollPane = new JScrollPane(mealList);
 
         mealList.addMouseListener(new MouseAdapter() {
@@ -100,7 +117,7 @@ public class MainView extends JPanel implements MealListener, ExerciseListener {
             public void mouseClicked(MouseEvent e) {
                 if (e.getClickCount() == 2) {  // Check for double-click
                     int index = mealList.locationToIndex(e.getPoint());
-                    String selectedMeal = mealList.getModel().getElementAt(index);
+                    Meal selectedMeal = mealList.getModel().getElementAt(index);
                     openMealPopup(selectedMeal);
                 }
             }
@@ -116,12 +133,12 @@ public class MainView extends JPanel implements MealListener, ExerciseListener {
         this.add(scrollPane, gbc);
     }
 
-    private void openMealPopup(String selectedMeal) {
-        JOptionPane.showMessageDialog(this, "You selected: " + selectedMeal, "Meal Details", JOptionPane.INFORMATION_MESSAGE);
+    private void openMealPopup(Meal selectedMeal) {
+        JOptionPane.showMessageDialog(this, "Selected meal: " + selectedMeal, "Meal Details", JOptionPane.INFORMATION_MESSAGE);
     }
 
     private void updateFoodTextArea(Meal meal) {
-        mealListModel.add(0, meal.mainString());
+        mealListModel.add(0, meal);
     }
 
     private void updateProgressBar() {
@@ -135,7 +152,7 @@ public class MainView extends JPanel implements MealListener, ExerciseListener {
         try {
             List<Meal> meals = db.getMeals();
             for (Meal meal : meals) {
-                mealListModel.addElement(meal.mainString()); // Add meals to the list model
+                mealListModel.addElement(meal); // Add meals to the list model
             }
             updateProgressBar();
         } catch (SQLException e) {
