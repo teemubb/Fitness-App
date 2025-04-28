@@ -15,6 +15,7 @@ This project was originally done with a partner. I've since re-uploaded it to my
 
 - Some basic functionality to test the UI implementation such as personalisation options, plan selection etc.
 
+- PostgreSQL database for storing added meals.
 
 
 ## Possible improvements
@@ -22,6 +23,6 @@ This project was originally done with a partner. I've since re-uploaded it to my
 
 - Adding better functionality to make the app more usable.
 
-- Some sort of database to save progress between app launches and load activities from.
+
 
 
