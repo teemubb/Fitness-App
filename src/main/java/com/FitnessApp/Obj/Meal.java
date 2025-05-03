@@ -1,6 +1,7 @@
 package com.FitnessApp.Obj;
 
 public class Meal extends Item {
+    private int id;
     private double calories;
     private double fat;
     private double protein;
@@ -29,11 +30,11 @@ public class Meal extends Item {
         if(ch > 0){
             carbohydrates = ch;
         }
-        this.datemilli = System.currentTimeMillis();
+        //this.datemilli = System.currentTimeMillis();
     }
 
     // constructor for meal from database
-    public Meal(String n, double c, double f, double p, double ch, long date){
+    public Meal(String n, double c, double f, double p, double ch, int id){
         super(n);
         if(c > 0){
             calories = c;
@@ -47,10 +48,17 @@ public class Meal extends Item {
         if(ch > 0){
             carbohydrates = ch;
         }
-        this.datemilli = date;
+        this.id = id;
+        System.out.println("set id");
 
     }
+    public int getId() {
+        return id;
+    }
 
+    public void setId(int id) {
+        this.id = id;
+    }
     public double getCalories() {
         return calories;
     }
@@ -87,6 +95,10 @@ public class Meal extends Item {
         }
     }
 
+    public long getDatemilli() {
+        return datemilli;
+    }
+
     public String toString(){
         StringBuilder sb = new StringBuilder();
         sb.append(getName())
@@ -94,7 +106,7 @@ public class Meal extends Item {
                 .append("\n\uD83E\uDD51 Fat: ").append(fat)
                 .append("\n\uD83C\uDF57 Protein: ").append(protein)
                 .append("\n\uD83C\uDF3E Carbohydrates: ").append(carbohydrates)
-                .append("\n\uD83D\uDD52 Timestamp: ").append(getFormattedTimestamp())
+                .append("\n\uD83D\uDD52 Time: ").append(getFormattedTimestamp())
                 .append("\n");
         return sb.toString();
     }
@@ -106,10 +118,4 @@ public class Meal extends Item {
         return sb.toString();
     }
 
-    public String getFormattedTimestamp() {
-        // Use java.util.Date to convert the timestamp to a human-readable format
-        java.util.Date date = new java.util.Date(datemilli);
-        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm");
-        return sdf.format(datemilli);
-    }
 }
