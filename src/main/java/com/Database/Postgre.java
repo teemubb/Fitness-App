@@ -48,7 +48,7 @@ public class Postgre {
                 + "fat DOUBLE PRECISION NOT NULL, "
                 + "protein DOUBLE PRECISION NOT NULL, "
                 + "carbs DOUBLE PRECISION NOT NULL, "
-                + "date TIMESTAMP DEFAULT CURRENT_TIMESTAMP"
+                + "date TIMESTAMP NOT NULL" // Timestamp from item object...
                 + ");";
         try(Statement s = connection.createStatement()){
             s.executeUpdate(createMealTable);
@@ -58,24 +58,42 @@ public class Postgre {
         }
     }
 
-    public void addMeal(String mealName, double calories, double fat, double protein, double carbs){
-        String query = "INSERT INTO meals (meal_name, calories, fat, protein, carbs)"
-                + "VALUES (?, ?, ?, ?, ?)";
-        try(PreparedStatement s = connection.prepareStatement(query)){
-            s.setString(1, mealName);
-            s.setDouble(2, calories);
-            s.setDouble(3, fat);
-            s.setDouble(4, protein);
-            s.setDouble(5, carbs);
+    public void addMeal(Meal meal) {
+        String query = "INSERT INTO meals (meal_name, calories, fat, protein, carbs, date) VALUES (?, ?, ?, ?, ?, ?)";
+        try (PreparedStatement s = connection.prepareStatement(query)) {
+            s.setString(1, meal.getName());
+            s.setDouble(2, meal.getCalories());
+            s.setDouble(3, meal.getFat());
+            s.setDouble(4, meal.getProtein());
+            s.setDouble(5, meal.getCarbohydrates());
+            s.setTimestamp(6, meal.getTimestamp()); // Timestamp from item object...
             s.executeUpdate();
-            System.out.println("Meal added: " + mealName);
+            System.out.println("Meal added: " + meal.getName());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateMeal(Meal meal){
+        String query = "UPDATE meals SET calories = ?, fat = ?, protein = ?, carbs = ?, meal_name = ? WHERE id = ?";
+
+        try(PreparedStatement s = connection.prepareStatement(query)){
+            s.setDouble(1, meal.getCalories());
+            s.setDouble(2, meal.getFat());
+            s.setDouble(3, meal.getProtein());
+            s.setDouble(4, meal.getCarbohydrates());
+            s.setString(5, meal.getName());
+            s.setInt(6, meal.getId());
+            s.executeUpdate();
+            System.out.println("Meal updated!");
+            System.out.println(meal.getId());
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
     public List<Meal> getMeals() throws SQLException {
-        String query = "SELECT * FROM meals ORDER BY date ASC";
+        String query = "SELECT * FROM meals ORDER BY date DESC";
         List<Meal> mealList = new ArrayList<>();
         try (Statement s = connection.createStatement();
              ResultSet rs = s.executeQuery(query)) {
@@ -89,16 +107,16 @@ public class Postgre {
                         rs.getDouble("fat"),
                         rs.getDouble("protein"),
                         rs.getDouble("carbs"),
-                        timestampMillis
+                        rs.getInt("id")
                 );
-                System.out.println(timestampMillis);
+                System.out.println(timestampMillis); //debug stuff
                 mealList.add(meal);
             }
         }
         return mealList;
     }
 
-    //TODO: save mealplan&other user data, exercises, logic to reset daily
+    //TODO: save mealplan&other user data, exercises, logic to reset daily,
 }
 
 
