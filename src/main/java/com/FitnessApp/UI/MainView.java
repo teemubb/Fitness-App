@@ -54,7 +54,6 @@ public class MainView extends JPanel implements MealListener, ExerciseListener {
         JButton addButton = new JButton("Add meal");
         gbc.gridx = 1;
         gbc.gridy = 4;
-        //gbc.gridwidth = 1;
         gbc.anchor = GridBagConstraints.SOUTHEAST; // Align to bottom right
         gbc.fill = GridBagConstraints.NONE; // Don't stretch the button
         this.add(addButton, gbc);
@@ -87,7 +86,7 @@ public class MainView extends JPanel implements MealListener, ExerciseListener {
         gbc.fill = GridBagConstraints.HORIZONTAL; // Don't stretch the button
         this.add(progressBar, gbc);
 
-        // Meal display setup TODO: add functionality to edit existing meals
+        // Meal display setup
         mealListModel = new DefaultListModel<>();
         mealList = new JList<>(mealListModel);
         mealList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -101,8 +100,7 @@ public class MainView extends JPanel implements MealListener, ExerciseListener {
                 //default renderer
                 super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
                 // in case of meal,
-                if (value instanceof Meal) { //check if element in mealList is meal object
-                    Meal meal = (Meal) value; //cast value
+                if (value instanceof Meal meal) { //check if element in mealList is meal object
                     setText(meal.mainString()); //use mainString for correct string builder
                 }
 
@@ -134,8 +132,58 @@ public class MainView extends JPanel implements MealListener, ExerciseListener {
     }
 
     private void openMealPopup(Meal selectedMeal) {
-        JOptionPane.showMessageDialog(this, "Selected meal: " + selectedMeal, "Meal Details", JOptionPane.INFORMATION_MESSAGE);
+        String message = "Selected meal:\n" + selectedMeal.toString();
+
+        Object[] options = { "Edit", "Close" };
+        int choice = JOptionPane.showOptionDialog(
+                this,
+                message,
+                "Meal Details",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.INFORMATION_MESSAGE,
+                null,
+                options,
+                options[1]
+        );
+
+        if (choice == JOptionPane.YES_OPTION) {
+            openMealEdit(selectedMeal); // Open edit window
+        }
     }
+
+    private void openMealEdit(Meal meal) {
+        JTextField nameField = new JTextField(meal.getName());
+        JTextField caloriesField = new JTextField(String.valueOf(meal.getCalories()));
+        JTextField fatField = new JTextField(String.valueOf(meal.getFat()));
+        JTextField proteinField = new JTextField(String.valueOf(meal.getProtein()));
+        JTextField carbsField = new JTextField(String.valueOf(meal.getCarbohydrates()));
+        JPanel panel = new JPanel(new GridLayout(0, 1));
+        panel.add(new JLabel("Name:"));
+        panel.add(nameField);
+        panel.add(new JLabel("Calories:"));
+        panel.add(caloriesField);
+        panel.add(new JLabel("Fat:"));
+        panel.add(fatField);
+        panel.add(new JLabel("Protein:"));
+        panel.add(proteinField);
+        panel.add(new JLabel("Carbohydrates:"));
+        panel.add(carbsField);
+
+        int selection = JOptionPane.showConfirmDialog(this, panel,
+                "Edit Meal", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+
+        if (selection == JOptionPane.OK_OPTION) {
+            // Update the meal object with new values
+            meal.setName(nameField.getText());
+            meal.setCalories(Double.parseDouble(caloriesField.getText()));
+            meal.setFat(Double.parseDouble(fatField.getText()));
+            meal.setProtein(Double.parseDouble(proteinField.getText()));
+            meal.setCarbohydrates(Double.parseDouble(carbsField.getText()));
+
+            db.updateMeal(meal);
+        }
+    }
+
 
     private void updateFoodTextArea(Meal meal) {
         mealListModel.add(0, meal);
