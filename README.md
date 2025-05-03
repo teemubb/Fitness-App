@@ -1,19 +1,21 @@
 # Fitness App
 
-This project was a fitness app made for a programming course in university, where the goal was to design and implement an UI. The project was made with Java Swing.
+This project is a fitness app made for a programming course in university, where the goal was to design and implement an UI. The project was made with Java Swing using PostgreSQL for data storage.
 
 > [!NOTE]  
-This project was originally done with a partner. I've since re-uploaded it to my own repository since original repository was private and also have added further improvements and enhancements independently.
+This project was originally done with a partner for a course focused on UI programming.
+> I've since re-uploaded it to my own repository since original repository was private, and have since continued development independently. 
+> Most of the current functionality and enhancements were added after this and are my own work.
 
 ## Features
 
-- A desktop application for tracking meals and physical activity made with Swing.
+- A desktop application for tracking meals (and physical activity) with a dynamic UI that changes based on user input to different views made with Swing.
 
-- Dynamic UI that changes based on user input to different views.
+- Adding and editing meals. Users can add new meals and update existing ones (by double clicking them) on the database through the UI.
 
-- Main view updates real-time based on user's entered meals and selected plans.
+- Main view updates real-time from the database based on user's entered meals (and selected plans).
 
-- Some basic functionality to test the UI implementation such as personalisation options, plan selection etc.
+- Some basic functionality to test rest of the UI implementation such as personalisation options, plan selection etc. (Proper functionality to be implemented...)
 
 - PostgreSQL database for storing added meals.
 
@@ -21,7 +23,8 @@ This project was originally done with a partner. I've since re-uploaded it to my
 ## Possible improvements
 
 
-- Adding better functionality to make the app more usable.
+- Adding more features such as exercises, saving user data to db etc...
+- Spring boot for multi platform usage?
 
 
 
