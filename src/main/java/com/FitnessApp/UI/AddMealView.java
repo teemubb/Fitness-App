@@ -88,7 +88,7 @@ public class AddMealView extends JPanel {
                 Meal meal = new Meal(name, calories, fat, protein, carbs);
                 //ui.getUser().addMeal(meal); // useless
                 System.out.println("test1");
-                db.addMeal(name, calories, fat, protein, carbs);
+                db.addMeal(meal);
                 System.out.println("test2");
 
                 fireMealAdded(meal);
